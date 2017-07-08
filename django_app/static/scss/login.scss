@@ -1,0 +1,139 @@
+body {
+  background: url("/static/images/dryflower.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+
+  .container {
+    width: 100%;
+    height: auto;
+    background: rgba(53, 53, 53, 0.3);
+
+    .top-bar {
+      width: 100%;
+      margin: 0 auto;
+      height: 100px;
+      line-height:100px;
+
+      .logo {
+        font-family: 'Gochi Hand', 'Walter Turncoat';
+        font-size: 34px;
+        font-weight: bold;
+        width:35%;
+        float: left;
+
+        a {
+          color: #DB9CFF;
+          padding-left: 50px;
+          transition: color 0.2s;
+
+          &:hover {
+            color: #60DB96;
+          }
+        }
+      }
+      .do {
+        width: 62%;
+        float: left;
+        text-align: right;
+
+        a {
+          color: #fff;
+          padding-right: 30px;
+
+          &:hover {
+            color: #EAEAEA
+          }
+        }
+      }
+    }
+
+    .content {
+      width: 100%;
+      height: 550px;
+
+      .do-login {
+        width: 450px;
+        margin: 0 auto;
+        height: 500px;
+        background: #fff;
+        opacity: 0.9;
+        border-radius: 10px;
+
+        .login-title {
+          width: 100%;
+          height: 100px;
+          line-height: 100px;
+          text-align: center;
+          font-weight: bold;
+        }
+
+        .login-input {
+          width: 100%;
+          height: auto;
+          text-align: center;
+
+          input[type=text], input[type=password] {
+            width: 400px;
+            height: 35px;
+            // border: none;
+            border: 1px solid #EAEAEA;
+            border-radius: 5px;
+            padding: 8px;
+            margin-bottom: 20px;
+          }
+
+          .btn-mint {
+            width: 400px;
+            height: 40px;
+            background-color: #60DB96;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 4px 6px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 16px;
+          }
+
+          .btn-pink {
+            width: 400px;
+            height: 40px;
+            background-color: pink;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 4px 6px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 16px;
+          }
+        }
+
+        .facebook {
+          width: 100%;
+          text-align: center;
+          color: #8C8C8C;
+          font-size: 14px;
+
+          .btn-primary {
+            width: 400px;
+            height: 40px;
+            background-color: #36589C;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 4px 6px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 16px;
+          }
+        }
+
+        a {
+          color: skyblue;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

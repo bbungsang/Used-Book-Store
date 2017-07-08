@@ -1,0 +1,69 @@
+{% load static %}
+
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BongDal Login</title>
+
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+  <link href='https://fonts.googleapis.com/css?family=Gochi Hand' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Walter Turncoat' rel='stylesheet'>
+</head>
+<body>
+  <div class="container">
+    <div class="top-bar">
+      <div class="logo">
+        <a href="{% url 'books:main' %}">
+          BongDal
+        </a>
+      </div>
+      <div class="do">
+        <a href="#">
+          계정만들기
+        </a>
+        <a href="#">
+          로그인
+        </a>
+      </div>
+    </div>
+    <div class="content">
+      <div class="do-login">
+        <div class="login-title">
+          <h2>로그인</h2>
+        </div>
+        <nav>
+            <div class="login-input">
+              <form action="" method="POST">
+                {% csrf_token %}
+                {% include 'include/member-field-set.html' with form=form %}
+                <button type="submit" class="btn-mint">로그인</button>
+              </form>
+              <a href="{% url 'member:signup' %}">
+                <button class="btn-pink">회원가입</button>
+              </a>
+            </div>
+        </nav>
+        <div class="facebook">
+          <p>
+            --------------- 또는 ---------------
+          </p>
+          <div class="btn-primary">
+            <a href="#">
+              <button class="btn-primary">페이스북 로그인</button>
+            </a>
+          </div>
+          <p>
+            계정이 없나요? <a href="#">계정 만들기</a>
+          </p>
+          비밀번호가 기억나지 않으세요? <a href="#">비밀번호 재설정</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

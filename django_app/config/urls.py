@@ -18,7 +18,11 @@ from django.contrib import admin
 
 from config import settings
 from django.conf.urls.static import static
+from member import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^book/', include('book_store.urls')),
+    url(r'^member/', include('member.urls')),
+    url(r'^$', views.login),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

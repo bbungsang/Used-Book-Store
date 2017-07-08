@@ -1,0 +1,39 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+<div class="book_count">
+    "<a href="#">{{ q }}</a>"
+    의 검색 결과 : {{ book_count }} 개
+</div>
+
+<form action="{% url 'books:book_bucket' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">장바구니에 담기</button>
+    <a href="#">최근등록순</a>
+    <a href="#">판매량순</a>
+    {% for book_list in book_lists %}
+        <ul>
+            <li>
+                <div class="book-info">
+                    <div class="book-img">
+                        <input type="checkbox" name="book_id", value="{{ book_list.pk }}"/>
+                        <img src="{{ book_list.image.url }}">
+                    </div>
+                    <div class="book_description">
+                        <p class="book-title">{{ book_list.title }}</p>
+                        <span>
+                            <a href="#">
+                                {{ book_list.writer }}
+                            </a> |
+                            <a href="#">
+                                {{ book_list.publisher }}
+                            </a> | {{ book_list.publication }}
+                        </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    {% endfor %}
+</form>
+{% endblock %}

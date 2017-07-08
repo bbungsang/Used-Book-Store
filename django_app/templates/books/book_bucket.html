@@ -1,0 +1,8 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    {% for book in books %}
+    <img src="{{ book.image.url }}">
+    {{ book.title }} | {{ book.writer }} | {{ book.publisher }}
+    {% endfor %}
+{% endblock %}

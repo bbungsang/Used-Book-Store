@@ -4,6 +4,5 @@ from book_store.models import BookInfo
 
 
 class PostAdmin(admin.ModelAdmin):
-    # list_display = ['id', 'writer', 'publisher', 'publication', 'original_price', 'used_price']
-    pass
+    list_display = ['id', 'title', 'writer', 'publisher', 'publication']
 admin.site.register(BookInfo, PostAdmin)

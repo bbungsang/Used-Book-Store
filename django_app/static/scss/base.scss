@@ -1,0 +1,45 @@
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*  */
+
+#parent_wrap {
+  height: 225px;
+  width: 100%;
+
+  .book-list {
+    width: 1200px;
+    margin: 0 auto;
+
+    .list {
+      overflow:hidden;
+
+      li {
+        float:left;
+
+        img {
+          height: 225px;
+        }
+      }
+    }
+
+    #left_btn { height:225px; width:5%; float:left; background:#fff; position:relative; }
+    #book_list { height:225px; width:80%; float:left; }
+    #right_btn { height:225px; width:5%; float:left; background:#fff; position:relative; }
+
+    #books { hieght:220px; width:100%; }
+  }
+}
+
+.book_count {
+  width: 600px;
+  height: auto;
+  float: left;
+}

@@ -1,0 +1,57 @@
+{% load static %}
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var wd = $(".list li").width();
+        var max = wd * $(".list li").size();
+        $(".list").width(max);
+        $(".list li:last").prependTo(".list")
+        $(".list").css("-margin-left",-wd)
+
+        $(".next").click(function(){
+            $(".list").animate({
+                marginLeft : parseInt($(".list").css("margin-left"))-wd+"px"
+            },"swing",function(){
+
+            $(".list li:first").appendTo(".list");
+            $(".list").css("margin-left" ,-wd)
+            });
+            return false;
+        });
+
+        $(".prev").click(function(){
+            $(".list").animate({
+                marginLeft : parseInt($(".list").css("margin-left"))+wd+"px"
+            },"swing",function(){
+                $(".list li:last").prependTo(".list");
+                $(".list").css("margin-left" , -wd)
+            })
+            return false;
+       });
+    });
+</script>
+
+<div id='moving_books'>
+    <div id='left_btn'>
+        <a href="#" class="prev">
+            <img src="{% static 'images/previous.png' %}" width="24px">
+        </a>
+    </div>
+    <div id='right_btn'>
+     <a href="#" class="next">
+         <img src="{% static 'images/next.png' %}" width="24px">
+     </a>
+    </div>
+	<div class='book-list'>
+		<div id='books'>
+		    <ul class="list">
+            {% for book in books %}
+		        <li>
+              <img src="{{ book.image.url }}" alt="">
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+  </div>
+</div>

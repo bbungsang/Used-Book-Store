@@ -1,0 +1,120 @@
+{% load static %}
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BookStore</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <!-- jQuery library -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <!-- Latest compiled JavaScript -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+
+    <link href='https://fonts.googleapis.com/css?family=Gochi Hand' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Walter Turncoat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Seaweed Script' rel='stylesheet'>
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="top-bar">
+            <div class='do-it'>
+                <ul class='member-manager'>
+                    {% if request.user.is_authenticated %}
+                    <li>
+                        <a href='#'>
+                            마이페이지
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            장바구니
+                        </a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href='#'>
+                            로그인
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            회원가입
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class='top-wrap'>
+            <div class='top-left'>
+                <div class="home">
+                    <a href="{% url 'books:main' %}">
+                        bongdal
+                    </a>
+                </div>
+            </div>
+            <div class="top-center">
+                <div class="search">
+                    <ul>
+                        <li>
+                            <form action="{% url 'books:book_search' %}" method="POST" name="q">
+                                {% csrf_token %}
+                                {{ search }}
+                                <button type="submit" class="btn-mint">검색</button>
+                            </form>
+                        </li>
+                    </ul>
+                    <!-- <nav class="navbar-default">
+                        <ul class="nav navbar-nav entire-menu">
+                            <li class="entire-menu-list">
+                                <a href="#" class="a-element">베스트셀러</a>
+                            </li>
+                            <li class="entire-menu-list">
+                                <a href="#" class="a-element">새로 등록된 상품</a>
+                            </li>
+                            <li class="entire-menu-list dropdown dropdown-large">
+                                <a href="#" class="dropdown-toggle a-element" data-toggle="dropdown">카테고리 <b class="caret"></b></a>
+                                {% include 'common/category.html' %}
+                            </li>
+                        </ul>
+                    </nav> -->
+
+
+                    <!--<ul>-->
+                        <!--<li class="elements">-->
+                            <!--<a href="#">베스트셀러</a>-->
+                        <!--</li>-->
+                        <!--<li class="elements">-->
+                            <!--<a href="#">새로 등록된 상품</a>-->
+                        <!--</li>-->
+                        <!--<li class="elements">-->
+                            <!--<a href="#">-->
+                                <!--카테고리-->
+                                <!--<img src="{% static 'images/arrow-down.png' %}" width="12px">-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                </div>
+            </div>
+            <div class='top-right'>
+                <img src="{% static 'images/logo.jpg' %}">
+            </div>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
