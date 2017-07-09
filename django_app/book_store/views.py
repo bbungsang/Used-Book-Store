@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import SearchForm
-from .models import BookInfo
+from .models import BookInfo, BookBucket
 
 User = get_user_model()
 
@@ -28,7 +28,6 @@ def book_search(request):
     form = SearchForm(data=request.POST)
     if form.is_valid():
         q = form.cleaned_data['q_search']
-        print(q)
         book_lists = BookInfo.objects.filter(
             Q(Q(title__contains=q) | Q(writer__contains=q)) | Q(publisher__contains=q),
         )
@@ -51,14 +50,16 @@ def book_bucket(request):
             book=book_info,
         )
 
-        book_lists = book_info.bookbucket_set.filter(user_id=request.user.id)
+        # book_lists = book_info.bookbucket_set.filter(user_id=request.user.id)
+        book_lists = BookBucket.objects.filter(user_id=request.user.id)
+
+        books = []
+
         for book_list in book_lists:
-            print(book_list)
-        # books = book_info.objects.filter(pk=book_list.book_id)
-        # print(books)
+            books.append(BookInfo.objects.get(pk=book_list.book_id))
 
         context = {
-            # 'books': books,
+            'books': books,
         }
         return render(request, 'books/book_bucket.html', context)
     else:
