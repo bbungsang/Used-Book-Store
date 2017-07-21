@@ -186,4 +186,7 @@ ENV/
 # End of https://www.gitignore.io/api/linux,django,python,pycharm
 
 .idea/
-.ipynb_checkpoints/s
+.ipynb_checkpoints/
+
+.config_secret/
+.config/
