@@ -3,9 +3,6 @@ FROM            ubuntu:16.04
 # 관리자
 MAINTAINER      bbungsang@gmail.com
 
-# 현재 경로를 /srv/used-book-store 에 복사
-# COPY            . /srv/used-book-store
-
 # 해당 스크립트에서는 y/n 에 대해 대답할 수 없기 때문에 -y 옵션을 줘야한다
 RUN             apt-get -y update
 RUN             apt-get install -y python-pip
@@ -62,5 +59,7 @@ RUN             apt-get -y install nginx
 ##
 # Note :
 #   - 명령어 한 줄 마다 레이어가 남는다.
-#   - docker build -t eb_ubuntu . -f .dockerfiles/Dockerfile.ubuntu
+#   - 이미지 생성 명령어
+#       docker build -t <사용할 이미지 이름> <프로젝트 경로> -f <Dockerfile.custom 경로>
+#       docker build -t eb_ubuntu . -f .dockerfiles/Dockerfile.custom.ubuntu
 ##
