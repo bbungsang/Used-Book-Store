@@ -25,4 +25,7 @@ urlpatterns = [
     url(r'^book/', include('book_store.urls')),
     url(r'^member/', include('member.urls')),
     url(r'^$', views.login),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static('/static/', document_root='project/.static_root')
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

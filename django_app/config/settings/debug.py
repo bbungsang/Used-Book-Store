@@ -3,7 +3,7 @@ from .base import *
 config_secret_debug = json.loads(open(CONFIG_SECRET_DEBUG_FILE).read())
 
 # INSTALLED_APPS
-# INSTALLED_APPS.append('django_extensions')
+INSTALLED_APPS.append('django_extensions')
 
 # WSGI application
 WSGI_APPLICATION = 'config.wsgi.debug.application'
