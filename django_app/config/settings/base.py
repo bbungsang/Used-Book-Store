@@ -18,10 +18,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # django_app/templates
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # django_app/static
-STATIC_DIRECTORY = os.path.join(BASE_DIR, 'static')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
-    STATIC_DIRECTORY,
+    STATIC_DIR,
 ]
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
