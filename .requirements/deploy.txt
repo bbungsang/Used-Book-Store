@@ -3,4 +3,5 @@ pytz==2017.2
 Pillow==4.2.1
 psycopg2<2.8
 django-storages<1.7
-boto3
+boto3==1.4.4
+django-extensions==1.8.1
