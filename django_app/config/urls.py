@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^member/', include('member.urls')),
     url(r'^$', views.login),
 ]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_DIR)
 urlpatterns += static('/static/', document_root='project/.static_root')
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
