@@ -1,6 +1,5 @@
+from django.conf import settings
 from django.db import models
-
-from config import settings
 
 
 class BookInfo(models.Model):
@@ -36,11 +35,11 @@ class BookLike(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class SellBook(models.Model):
-    book_info = models.ForeignKey(BookInfo, )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    sell_price = models.CharField(max_length=12)
-    book_status = models.CharField(max_length=2)
+# class SellBook(models.Model):
+#     book_info = models.ForeignKey(BookInfo, )
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL)
+#     sell_price = models.CharField(max_length=12)
+#     book_status = models.CharField(max_length=2)
 
 
 class Comment(models.Model):
