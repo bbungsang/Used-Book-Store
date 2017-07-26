@@ -55,7 +55,15 @@ api_secret_keys = json.loads(open(API_SECRET_KEYS).read())
 
 FACEBOOK_SECRET_CODE = api_secret_keys['facebook']['secret_key']
 
+
+# kakako
+KAKAO_APP_ID = '0b73c9dfce9946e2d524afac12ac7193'
+KAKAO_ADMIN_KEY = api_secret_keys['kakao']['admin_key']
+KAKAO_CLIENT_SECRET = api_secret_keys['kakao']['client_secret']
+
+
 SITE_URL = 'http://localhost:8000'
+KAKAO_REDIRECT_URI = SITE_URL + '/member/login/kakao'
 
 # Application definition
 INSTALLED_APPS = [
@@ -98,6 +106,7 @@ TEMPLATES = [
 
                 # Custom context processors
                 'member.utils.context_processors.socials.facebook_info',
+                'member.utils.context_processors.socials.kakao_info',
             ],
         },
     },

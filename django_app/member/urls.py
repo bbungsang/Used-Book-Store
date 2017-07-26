@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^logout/$', views.logout, name='logout'),
 
     # social login
-    url(r'^login/facebook$', views.facebook_login, name='facebook_login'),
+    url(r'^login/facebook/$', views.facebook_login, name='facebook_login'),
+    url(r'^login/kakao/$', views.kakao_login, name='kakao_login'),
 ]

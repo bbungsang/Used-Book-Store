@@ -190,6 +190,121 @@ def facebook_login(request):
         return add_message_and_redirect_referer()
 
 
+def kakao_login(request):
+    code = request.GET.get('code')
+
+    ##
+    # 액세스 토큰 얻기
+    ##
+
+    # code 인자를 받아서 Access Token 교환을 URL 에 요청후, 해당 Access Token 을 받는다.
+    def get_access_token(code):
+
+        # Access Token 을 교환할 URL
+        exchange_access_token_url = 'https://kauth.kakao.com/oauth/token'
+
+        # 이전에 요청했던 URL 과 같은 값 생성(Access Token 요청시 필요)
+        redirect_uri = settings.KAKAO_REDIRECT_URI
+
+        # Access Token 요청시 필요한 파라미터
+        exchange_access_token_url_params = {
+            'grant_type': 'authorization_code',
+            'client_id': settings.KAKAO_APP_ID,
+            'redirect_uri': redirect_uri,
+            'code': code,
+            'client_secret': settings.KAKAO_CLIENT_SECRET,
+        }
+
+        # Access Token 을 요청한다.
+        response = requests.get(
+            exchange_access_token_url,
+            params=exchange_access_token_url_params,
+        )
+        result = response.json()
+        print("get_access_token result :", result)
+
+        # 응답받은 결과값에 'access_token'이라는 key 가 존재하면,
+        if 'access_token' in result:
+            # access_token key 의 value 를 반환한다.
+            return result['access_token']
+        elif 'error' in result:
+            raise Exception(result)
+        else:
+            raise Exception('Unknown error')
+
+    def add_message_and_redirect_referer():
+        error_message = 'Kakao login error'
+        messages.error(request, error_message)
+
+        # 이전 URL 로 리다이렉트
+        return redirect(request.META['HTTP_REFERER'])
+
+    def app_connection(access_token):
+        url = 'https://kapi.kakao.com/v1/user/signup'
+        access_token = "Bearer " + access_token
+        response = requests.get(
+            url,
+            headers={
+                "Authorization": access_token,
+                # "Content-Type": "Content-Type: application/x-www-form-urlencoded;charset=utf-8",
+            },
+        )
+        print(response)
+        result = response.json()
+        print('app_connection result :', result)
+        return result
+
+    ##
+    # 발급받은 Access Token 을 이용하여 User 정보에 접근
+    ##
+    def get_user_info(app_connection):
+        url = 'https://kapi.kakao.com/v1/user/me'
+        # url_user_info_params = {
+        #     'target_id_type': 'user_id',
+        #     'target_id': app_connection,
+        #     'propertyKeys': [
+        #         'name',
+        #     ]
+        # }
+        response = requests.get(
+            url,
+            headers={
+                "Authorization": "Bearer " + access_token,
+                # "Content-Type": "Content-Type: application/x-www-form-urlencoded;charset=utf-8",
+            },
+        )
+        result = response.json()
+        print('get_user_info result :', result)
+        # 요청이 성공하면 응답 바디에 JSON 객체로 id, kaccount_email 을 포함한다.
+        return result
+
+    ##
+    # 카카오 로그인을 위해 정의한 함수 실행하기
+    ##
+
+    # code 가 없으면 에러 메세지를 request 에 추가하고 이전 페이지로 redirect
+    if not code:
+        return add_message_and_redirect_referer()
+
+    try:
+        access_token = get_access_token(code)
+        # debug_result = debug_token(access_token)
+        app_connection = app_connection(access_token)
+        user_info = get_user_info(app_connection)
+        user = User.objects.get_or_create_kakao_user(user_info)
+
+        django_login(request, user)
+        return redirect('books:main')
+    except GetAccessTokenException as e:
+        print(e.code)
+        print(e.message)
+        return add_message_and_redirect_referer()
+    except DebugTokenException as e:
+        print(e.code)
+        print(e.message)
+        return add_message_and_redirect_referer()
+
+
 # def telegram(request):
 #     import requests
 #     from bs4 import BeautifulSoup

@@ -7,3 +7,11 @@ def facebook_info(request):
         'site_url': 'http://localhost:8000',
     }
     return context
+
+
+def kakao_info(request):
+    context = {
+        'kakao_app_id': settings.KAKAO_APP_ID,
+        'redirect_uri': settings.KAKAO_REDIRECT_URI,
+    }
+    return context

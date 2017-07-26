@@ -21,13 +21,33 @@ class UserManager(DefaultUserManager):
         )
         return user
 
+    def get_or_create_kakao_user(self, user_info):
+        print('id' in user_info)
+        username = '{}_{}_{}'.format(
+            self.model.USER_TYPE_KAKAO,
+            settings.KAKAO_APP_ID,
+            user_info['id'],
+        )
+
+        user, user_created = self.get_or_create(
+            username=username,
+            user_type=self.model.USER_TYPE_KAKAO,
+            defaults={
+                'email': user_info.get('kaccount_email', ''),
+                # 'nickname': user_info.get('nickname', '')
+            }
+        )
+        return user
+
 
 class User(AbstractUser):
     USER_TYPE_DJANGO = 'd'
     USER_TYPE_FACEBOOK = 'f'
+    USER_TYPE_KAKAO = 'k'
     USER_TYPE_CHOICES = (
         (USER_TYPE_DJANGO, 'Django'),
         (USER_TYPE_FACEBOOK, 'Facebook'),
+        (USER_TYPE_KAKAO, 'kakao'),
     )
 
     objects = UserManager()
