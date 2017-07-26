@@ -47,6 +47,15 @@ config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
 
 SECRET_KEY = config_secret_common['django']['secret_key']
 
+# Facebook
+FACEBOOK_APP_ID = '237221433463795'
+
+API_SECRET_KEYS = os.path.join(CONFIG_SECRET_DIR, 'api_secret_keys.json')
+api_secret_keys = json.loads(open(API_SECRET_KEYS).read())
+
+FACEBOOK_SECRET_CODE = api_secret_keys['facebook']['secret_key']
+
+SITE_URL = 'http://localhost:8000'
 
 # Application definition
 INSTALLED_APPS = [
@@ -86,6 +95,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # Custom context processors
+                'member.utils.context_processors.socials.facebook_info',
             ],
         },
     },

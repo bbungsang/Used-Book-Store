@@ -5,3 +5,4 @@ psycopg2<2.8
 django-storages<1.7
 boto3==1.4.4
 django-extensions==1.8.1
+requests==2.9.1

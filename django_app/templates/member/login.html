@@ -52,11 +52,12 @@
           <p>
             --------------- 또는 ---------------
           </p>
-          <div class="btn-primary">
-            <a href="#">
-              <button class="btn-primary">페이스북 로그인</button>
+            <a href="https://www.facebook.com/v2.9/dialog/oauth?client_id={{ facebook_app_id }}&redirect_uri={{ site_url }}{% url 'member:facebook_login' %}" class="btn-facebook">
+              페이스북 로그인
             </a>
-          </div>
+            <a href="#" class="btn-kakao">
+              카카오 로그인
+            </a>
           <p>
             계정이 없나요? <a href="#">계정 만들기</a>
           </p>

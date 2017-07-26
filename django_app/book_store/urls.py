@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from book_store import views
+from . import views
 
 app_name = 'books'
 urlpatterns = [

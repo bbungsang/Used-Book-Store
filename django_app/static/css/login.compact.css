@@ -1,6 +1,6 @@
-body { background: url("/static/images/dryflower.png"); background-size: 100%; background-repeat: no-repeat; }
+body { background: url("/static/images/dryflower.png"); background-size: cover; background-repeat: no-repeat; }
 
-body .container { width: 100%; height: auto; background: rgba(53, 53, 53, 0.3); }
+body .container { width: 100%; height: 100%; background: rgba(53, 53, 53, 0.3); background-size: cover; }
 
 body .container .top-bar { width: 100%; margin: 0 auto; height: 100px; line-height: 100px; }
 
@@ -32,6 +32,8 @@ body .container .content .do-login .login-input .btn-pink { width: 400px; height
 
 body .container .content .do-login .facebook { width: 100%; text-align: center; color: #8C8C8C; font-size: 14px; }
 
-body .container .content .do-login .facebook .btn-primary { width: 400px; height: 40px; background-color: #36589C; color: white; border: none; border-radius: 2px; padding: 4px 6px; margin-bottom: 10px; text-align: center; font-size: 16px; }
+body .container .content .do-login .facebook .btn-facebook { width: 400px; height: 40px; background-color: #36589C; color: white; border: none; border-radius: 2px; padding: 4px 6px; margin-bottom: 10px; text-align: center; font-size: 16px; }
+
+body .container .content .do-login .facebook .btn-kakao { width: 400px; height: 40px; background-color: #FFCD12; color: #6F2B00; border: none; border-radius: 2px; padding: 4px 6px; margin-bottom: 10px; text-align: center; font-size: 16px; }
 
 body .container .content .do-login a { color: skyblue; font-size: 12px; }

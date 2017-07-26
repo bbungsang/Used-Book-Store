@@ -1,10 +1,13 @@
 from django.conf.urls import url
 
-from member import views
+from . import views
 
 app_name = 'member'
 urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^logout/$', views.logout, name='logout'),
+
+    # social login
+    url(r'^login/facebook$', views.facebook_login, name='facebook_login'),
 ]
