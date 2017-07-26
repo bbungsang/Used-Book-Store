@@ -274,7 +274,6 @@ def kakao_login(request):
             },
         )
         result = response.json()
-        print('get_user_info result :', result)
         # 요청이 성공하면 응답 바디에 JSON 객체로 id, kaccount_email 을 포함한다.
         return result
 
