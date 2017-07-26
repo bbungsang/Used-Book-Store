@@ -246,7 +246,7 @@ def kakao_login(request):
             url,
             headers={
                 "Authorization": access_token,
-                # "Content-Type": "Content-Type: application/x-www-form-urlencoded;charset=utf-8",
+                "Content-Type": "Content-Type: application/x-www-form-urlencoded;charset=utf-8",
             },
         )
         print(response)
