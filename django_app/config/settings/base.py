@@ -61,6 +61,7 @@ KAKAO_APP_ID = '0b73c9dfce9946e2d524afac12ac7193'
 KAKAO_ADMIN_KEY = api_secret_keys['kakao']['admin_key']
 KAKAO_CLIENT_SECRET = api_secret_keys['kakao']['client_secret']
 
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
