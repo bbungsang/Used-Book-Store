@@ -53,7 +53,7 @@ class User(AbstractUser):
     objects = UserManager()
 
     # profile_img = models.ImageField(blank=True)
-    email = models.EmailField(null=True, unique=True)
+    email = models.EmailField(null=True, blank=True)
 
     # 유저타입. 기본은 Django, 페이스북 로그인 시 USER_TYPE_FACEBOOK 값을 갖음
     user_type = models.CharField(max_length=1, choices=USER_TYPE_CHOICES, default=USER_TYPE_DJANGO)
