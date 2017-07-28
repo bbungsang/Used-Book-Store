@@ -10,7 +10,7 @@
 # from django.http import Http404
 # from rest_framework.views import APIView
 
-from rest_framework import mixins
+# from rest_framework import mixins
 from rest_framework import generics
 
 from ..models import User
@@ -116,6 +116,7 @@ from ..serializers import UserSerializer
 # 클래스 기반 뷰
 #   1. basic
 #   2. 믹스인 클래스
+#   3. 제네릭 클래스
 ##
 
 # 1. basic
@@ -167,26 +168,37 @@ from ..serializers import UserSerializer
 
 # 2. 믹스인 클래스
 
-class UserList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+# class UserList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+#
+#
+# class UserDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
+
+# 3. 제네릭 클래스
+
+class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class UserDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
