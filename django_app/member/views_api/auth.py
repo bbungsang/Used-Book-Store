@@ -3,12 +3,15 @@
 # from rest_framework.renderers import JSONRenderer
 # from rest_framework.parsers import JSONParser
 
-from rest_framework import status
+# from rest_framework import status
 # from rest_framework.decorators import api_view
-from rest_framework.response import Response
+# from rest_framework.response import Response
 
-from django.http import Http404
-from rest_framework.views import APIView
+# from django.http import Http404
+# from rest_framework.views import APIView
+
+from rest_framework import mixins
+from rest_framework import generics
 
 from ..models import User
 from ..serializers import UserSerializer
@@ -115,6 +118,8 @@ from ..serializers import UserSerializer
 #   2. 믹스인 클래스
 ##
 
+# 1. basic
+
 # class UserList(APIView):
 #     """
 #     코드 조각을 모두 보여주거나 새 코드 조각 생성.
@@ -161,3 +166,27 @@ from ..serializers import UserSerializer
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 # 2. 믹스인 클래스
+
+class UserList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class UserDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
