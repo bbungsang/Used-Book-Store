@@ -4,8 +4,11 @@
 # from rest_framework.parsers import JSONParser
 
 from rest_framework import status
-from rest_framework.decorators import api_view
+# from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from django.http import Http404
+from rest_framework.views import APIView
 
 from ..models import User
 from ..serializers import UserSerializer
@@ -67,43 +70,94 @@ from ..serializers import UserSerializer
 #         return HttpResponse(status=204)
 
 
-@api_view(['GET', 'POST'])
-def user_list(request):
-    if request.method == 'GET':
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# @api_view(['GET', 'POST'])
+# def user_list(request, formate=None):
+#     if request.method == 'GET':
+#         users = User.objects.all()
+#         serializer = UserSerializer(users, many=True)
+#         return Response(serializer.data)
+#     elif request.method == 'POST':
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def user_detail(request, pk, format=None):
+#     """
+#     코드 조각 조회, 업데이트, 삭제
+#     """
+#     try:
+#         user = User.objects.get(pk=pk)
+#     except User.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+#
+#     if request.method == 'GET':
+#         serializer = UserSerializer(user)
+#         return Response(serializer.data)
+#
+#     elif request.method == 'PUT':
+#         serializer = UserSerializer(user, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#     elif request.method == 'DELETE':
+#         user.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
+##
+# 클래스 기반 뷰
+#   1. basic
+#   2. 믹스인 클래스
+##
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def user_detail(request, pk):
-    """
-    코드 조각 조회, 업데이트, 삭제
-    """
-    try:
-        user = User.objects.get(pk=pk)
-    except User.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+# class UserList(APIView):
+#     """
+#     코드 조각을 모두 보여주거나 새 코드 조각 생성.
+#     """
+#     def get(self, request, format=None):
+#         users = User.objects.all()
+#         serializer = UserSerializer(users, many=True)
+#         return Response(serializer.data)
+#
+#     def post(self, request, format=None):
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#
+# class UserDetail(APIView):
+#     """
+#     코드 조각 조회, 업데이트, 삭제
+#     """
+#     def get_object(self, pk):
+#         try:
+#             return User.objects.get(pk=pk)
+#         except User.DoesNotExist:
+#             raise Http404
+#
+#     def get(self, request, pk, format=None):
+#         user = self.get_object(pk)
+#         serializer = UserSerializer(user)
+#         return Response(serializer.data)
+#
+#     def put(self, request, pk, format=None):
+#         user = self.get_object(pk)
+#         serializer = UserSerializer(user, data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#     def delete(self, request, pk, format=None):
+#         user = self.get_object(pk)
+#         user.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    if request.method == 'GET':
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = UserSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
+# 2. 믹스인 클래스
