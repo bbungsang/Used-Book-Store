@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from book_store.models import BookInfo
+from .models import BookInfo
 
 
 class PostAdmin(admin.ModelAdmin):

@@ -45,4 +45,6 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'email')
+        fields = ('id', 'username', 'password', 'email', 'book_info')
+        # 'book_info' 는 사용자 모델과 반대 방향으로 이어져 있기 때문에 ModelSerializer 에
+        # 기본적으로 추가되지 않는다. 따라서 명시적으로 필드를 지정해준다.

@@ -1,8 +1,8 @@
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager as DefaultUserManager
 
+from member.signals import create_auth_token
 
 class UserManager(DefaultUserManager):
     def get_or_create_facebook_user(self, user_info):

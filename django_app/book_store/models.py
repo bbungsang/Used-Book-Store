@@ -1,8 +1,13 @@
 from django.conf import settings
 from django.db import models
 
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters.html import HtmlFormatter
+from pygments import highlight
+
 
 class BookInfo(models.Model):
+    objects = None
     image = models.ImageField()
     title = models.CharField(max_length=48)
     intro = models.TextField(blank=True)
@@ -27,6 +32,21 @@ class BookInfo(models.Model):
         through='BookLike',
         related_name='like_books',
     )
+
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='book_info')
+    highlighted = models.TextField()
+
+    def save(self, *args, **kwargs):
+        """
+        `pygments` 라이브러리를 사용하여 하이라이트된 코드 생성
+        """
+        lexer = get_lexer_by_name(self.language)
+        linenos = self.linenos and 'table' or False
+        options = self.title and {'title': self.title} or {}
+        formatter = HtmlFormatter(style=self.style, linenos=linenos,
+                                  full=True, **options)
+        self.highlighted = highlight(self.code, lexer, formatter)
+        super(BookInfo, self).save(*args, **kwargs)
 
 
 class BookLike(models.Model):
