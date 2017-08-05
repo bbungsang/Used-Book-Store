@@ -41,9 +41,10 @@ def register_book(isbn, model=Book):
     해당 도서를 Book 모델 DB 혹은 WishBook 모델 저장한다. 이미 존재하는 경우 저장을 취소한다.
     isbn 정보를 활용하여 api 검색을 통해 책 정보를 가져온다.
     """
-    if model.objects.filter(isbn=isbn).exists():
+    book = model.objects.filter(isbn=isbn)
+    if book.exists():
         message = '이미 존재하는 책입니다'
-        return message, None
+        return message, book.first()
 
     client_id = settings.CLIENT_ID
     client_secret = settings.CLIENT_SECRET
@@ -55,7 +56,7 @@ def register_book(isbn, model=Book):
     context = ssl._create_unverified_context()
     response = urllib.request.urlopen(search_request, context=context)
     rescode = response.getcode()
-    if rescode==200:
+    if rescode == 200:
         response_body = response.read()
         json_rt = response_body.decode('utf-8')
         py_rt = json.loads(json_rt)

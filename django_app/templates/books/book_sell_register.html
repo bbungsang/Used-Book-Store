@@ -6,10 +6,14 @@
         <input type="submit">
     </form>
 
-    {% if items %}
-        {% for book in items %}
+    {% if datas %}
+        {% for book, form in datas %}
             {% include 'include/book.html' %}
-            {{ form.as_p }}
+            <form action="{% url 'books:book_sell_register_save' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit">
+            </form>
         {% endfor %}
     {% endif %}
 {% endblock %}

@@ -152,8 +152,17 @@ def book_sell_register(request):
     items = None
     if keyword:
         items = get_book_info(keyword)
-    for item in items:
-        book = register_book(isbn=item['isbn'])
-    form = SellBookForm(initial={'book': book})
-    return render(request, 'books/book_sell_register.html', {'items': items})
+    datas = []
+    if items:
+        for item in items:
+            book = register_book(isbn=item['isbn'])[1]
+            form = SellBookForm(initial={'book': book})
+            datas.append([item, form])
+    return render(request, 'books/book_sell_register.html', {'datas': datas})
 
+def book_sell_register_save(request):
+    if request.method == 'POST':
+        form = SellBookForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('books:book_sell_list')

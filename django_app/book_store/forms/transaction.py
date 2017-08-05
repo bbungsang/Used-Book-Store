@@ -12,3 +12,4 @@ class SellBookForm(forms.ModelForm):
             'book',
             'sell_price',
         ]
+        widgets = {'book': forms.HiddenInput()}
