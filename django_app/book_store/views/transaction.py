@@ -10,23 +10,29 @@ from book_store.models import Book, Transaction
 User = get_user_model()
 
 
-def check_buy_book(isbn):
+def check_buyers_and_send_email(isbn):
+    """
+    팔 책에 대한 구매자가 있는지 체크하여
+    이메일을 전송한다.
+    :param isbn:
+    :return:
+    """
     book_info = Book.objects.get(isbn=isbn)
-    buyers = Transaction.objects.filter(buyer__isnull=False)
+    transactions = Transaction.objects.filter(buyer__isnull=False)
 
-    for buyer in buyers:
-
-        if buyer and buyer.book == book_info:
+    for transaction in transactions:
+        if transaction and transaction.book == book_info:
             mail_subject = '{}님께서 등록하신 `{}`에 대하여 판매 책 정보가 업데이트 되었습니다.'.format(
-                buyer.buyer.username,
+                transaction.buyer.username,
                 book_info.title
             )
             mail_content = '책책책! 책을 읽읍시다!'
+            # ToDo-https://docs.djangoproject.com/en/1.11/topics/email/#send-mass-mail
             send_mail(
                 mail_subject,
                 mail_content,
                 settings.EMAIL_HOST_USER,
-                [buyer.buyer.email],
+                [transaction.buyer.email],
             )
 
 
@@ -41,7 +47,7 @@ def register_sell_book(request, ):
             post.save()
 
             isbn = post.book.isbn
-            check_buy_book(isbn)
+            check_buyers_and_send_email(isbn)
         return HttpResponse('Hello World!')
 
     else:
