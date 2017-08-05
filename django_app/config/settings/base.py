@@ -62,7 +62,6 @@ KAKAO_ADMIN_KEY = api_secret_keys['kakao']['admin_key']
 KAKAO_CLIENT_SECRET = api_secret_keys['kakao']['client_secret']
 
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,11 +75,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
-
-    'book_store',
-    'member.apps.MemberConfig',
     'django_messages',
+    'book_store',
+    'member',
 ]
+
+# Application definition
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

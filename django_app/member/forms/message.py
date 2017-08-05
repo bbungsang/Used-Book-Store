@@ -1,34 +1,17 @@
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
-
+from django_messages.forms import ComposeForm
+from django_messages.models import Message
 if "pinax.notifications" in settings.INSTALLED_APPS and getattr(settings, 'DJANGO_MESSAGES_NOTIFY', True):
     from pinax.notifications import models as notification
 else:
     notification = None
 
-from django_messages.models import Message
-from django_messages.fields import CommaSeparatedUserField
+User = get_user_model()
 
-class ComposeForm(forms.Form):
-    """
-    A simple default form for private messages.
-    """
-    User = get_user_model()
-
-    recipient = forms.ModelChoiceField(label='받는사람', queryset=User.objects.all())
-    subject = forms.CharField(label='제목', max_length=140)
-    body = forms.CharField(label='내용',
-                           widget=forms.Textarea(attrs={'rows': '12', 'cols':'55'}))
-
-
-    def __init__(self, *args, **kwargs):
-        recipient_filter = kwargs.pop('recipient_filter', None)
-        super(ComposeForm, self).__init__(*args, **kwargs)
-        if recipient_filter is not None:
-            self.fields['recipient']._recipient_filter = recipient_filter
+class NewComposeForm(ComposeForm):
+    recipient = forms.ModelChoiceField(label='받아랏!', queryset=User.objects.all())
 
     def save(self, sender, parent_msg=None):
         recipients = self.cleaned_data['recipient']

@@ -14,21 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
 
 from config import settings
-from django.conf.urls.static import static
-# from member import views
-
 from rest_framework.authtoken import views
-
+from django_messages.views import *
+from member.forms import NewComposeForm
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^book/', include('book_store.urls', namespace="book_store")),
     url(r'^member/', include('member.urls', namespace="member")),
+    url(r'^messages/compose/$', compose, {'form_class': NewComposeForm,}, name='messages_compose'),
     url(r'^messages/', include('django_messages.urls')),
-
     url(r'^api-token-auth/', views.obtain_auth_token),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_DIR)
