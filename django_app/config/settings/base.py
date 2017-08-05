@@ -74,10 +74,20 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'rest_framework',
+    'rest_framework.authtoken',
 
     'book_store',
     'member.apps.MemberConfig',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 SITE_ID = 1
 

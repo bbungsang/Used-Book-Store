@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 from .forms import SearchForm
 from .models import Book, BookBuyBucket

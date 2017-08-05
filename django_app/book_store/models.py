@@ -14,7 +14,6 @@ class Book(TimeStampedModel):
     publisher = models.CharField("출판사", max_length=40)
     publication_date = models.DateField("출판일")
 
-
     def __str__(self):
         return "{} {}".format(self.title, self.writer)
 
@@ -26,7 +25,6 @@ class Transaction(TimeStampedModel):
     buyer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="buyer_set", verbose_name="구매자", null=True, default=None, blank=True)
     is_successed = models.BooleanField("거래성사", default=False)
     sell_price = models.IntegerField("판매가")
-
 
 
 class BookLike(TimeStampedModel):
