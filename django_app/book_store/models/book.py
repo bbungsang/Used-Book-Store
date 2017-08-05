@@ -5,7 +5,7 @@ from django_extensions.db.models import TimeStampedModel
 
 class Book(TimeStampedModel):
     """책 정보"""
-    image_url = models.URLField("이미지url")
+    image_url = models.CharField("이미지url", max_length=240)
     title = models.CharField("제목", max_length=48)
     intro = models.TextField("소개", blank=True)
     writer = models.CharField("저자", max_length=36)
@@ -33,11 +33,6 @@ class BookLike(TimeStampedModel):
     book_info = models.ForeignKey(Book)
 
 
-class Comment(TimeStampedModel):
-    book_info = models.ForeignKey(Book)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-
-
 class Category(models.Model):
     pass
 
@@ -45,9 +40,13 @@ class Category(models.Model):
 class BookBuyBucket(TimeStampedModel):
     """장바구니"""
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    book = models.ForeignKey(
-        Book,
+    transaction = models.ForeignKey(
+        Transaction,
     )
+
+    class Meta:
+        unique_together = (("user", "transaction"),)
+
 
 class BookSellBucket(TimeStampedModel):
     """판매자 판매 목록"""
