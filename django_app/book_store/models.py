@@ -2,10 +2,6 @@ from django.conf import settings
 from django.db import models
 from django_extensions.db.models import TimeStampedModel
 
-from pygments.lexers import get_lexer_by_name
-from pygments.formatters.html import HtmlFormatter
-from pygments import highlight
-
 
 class Book(TimeStampedModel):
     """책 정보"""
