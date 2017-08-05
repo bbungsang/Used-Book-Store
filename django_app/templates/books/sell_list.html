@@ -1,0 +1,12 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+    <p><a href="{% url 'books:book_sell_register' %}">판매 책 등록하기</a></p>
+{% for transaction in sell_transactions %}
+    {{ transaction.book.title }}
+    {{ transaction.seller }}
+    <a href="{% url 'books:book_bucket_save' transaction.id %}">찜하기</a>
+    {{ transaction.id }}
+{% endfor %}
+
+{% endblock %}

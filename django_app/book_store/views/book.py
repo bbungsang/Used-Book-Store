@@ -99,3 +99,47 @@ def book_bucket(request):
             'books': books,
         }
         return render(request, 'books/book_bucket.html', context)
+
+
+def book_sell_list(request):
+    sell_transactions = Transaction.objects.filter(
+        is_successed=False, buyer__isnull=True, seller__isnull=False
+    ).prefetch_related('book')
+    return render(request, 'books/sell_list.html', {'sell_transactions': sell_transactions})
+
+
+def book_buy_list(request):
+    pass
+
+
+def book_bucket_save(request, transaction_pk):
+    '''
+    책 찜하기
+    :param request: Request
+    :param transaction_pk: Transaction
+    '''
+    transaction = get_object_or_404(
+        Transaction, pk=transaction_pk)
+    try:
+        BookBuyBucket.objects.create(
+            user=request.user, transaction=transaction)
+    except IntegrityError:
+        return redirect('books:book_sell_list')
+    return redirect('books:book_bucket_list')
+
+
+def book_bucket_list(request):
+    '''
+    찜한 책 리스트
+    :param request: Request
+    '''
+    items = BookBuyBucket.objects.filter(
+        user=request.user
+    ).prefetch_related(
+        'transaction', 'transaction__book'
+    )
+    return render(request, 'books/book_bucket.html', {'items': items})
+
+
+def book_sell_register(request):
+    return render(request, 'books/book_sell_register.html')
