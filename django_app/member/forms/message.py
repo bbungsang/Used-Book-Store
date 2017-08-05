@@ -8,6 +8,7 @@ if "pinax.notifications" in settings.INSTALLED_APPS and getattr(settings, 'DJANG
 else:
     notification = None
 
+
 User = get_user_model()
 
 class NewComposeForm(ComposeForm):
