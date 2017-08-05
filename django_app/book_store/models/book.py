@@ -5,7 +5,7 @@ from django_extensions.db.models import TimeStampedModel
 
 class Book(TimeStampedModel):
     """책 정보"""
-    image_url = models.URLField("이미지url")
+    image_url = models.CharField("이미지url", max_length=240)
     title = models.CharField("제목", max_length=48)
     intro = models.TextField("소개", blank=True)
     writer = models.CharField("저자", max_length=36)

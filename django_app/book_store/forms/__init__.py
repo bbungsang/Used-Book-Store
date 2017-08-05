@@ -1,2 +1,2 @@
-from .book import *
+from .search import *
 from .comment import *

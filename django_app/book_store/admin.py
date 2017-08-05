@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from django_extensions.admin import ForeignKeyAutocompleteAdmin
 
-from .models import Book
+from .models import Book, TransactionComment
 from .models import Transaction
 from .models import BookBuyBucket
 from .models import BookSellBucket
@@ -30,7 +30,14 @@ class BookSellBucketAdmin(ForeignKeyAutocompleteAdmin):
     raw_id_fields = ['user', 'book']
     search_fields = ['id', 'user__username', 'user__email']
 
+
+class TransactionCommentCreateAdmin(ForeignKeyAutocompleteAdmin):
+    list_display = ['id', 'post', 'author', 'content']
+    raw_id_fields = ['post', 'author']
+    # search_fields = ['']
+
 admin.site.register(Book, BookAdmin)
 admin.site.register(Transaction, TransactionAdmin)
 admin.site.register(BookBuyBucket, BookBuyBucketAdmin)
 admin.site.register(BookSellBucket, BookSellBucketAdmin)
+admin.site.register(TransactionComment, TransactionCommentCreateAdmin)
