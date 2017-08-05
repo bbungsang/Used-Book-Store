@@ -18,8 +18,10 @@ from django.contrib import admin
 
 from django_messages.views import *
 from django_app.member.forms import NewComposeForm
+# from member.forms import NewComposeForm
 from django.conf.urls.static import static
 from django_app.member import views
+# from member import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

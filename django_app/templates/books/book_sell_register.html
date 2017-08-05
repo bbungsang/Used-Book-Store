@@ -2,8 +2,13 @@
 
 {% block content %}
     <form action="" method="get">
-        <input type="text">
+        <input type="text" name="keyword">
         <input type="submit">
     </form>
 
+    {% if items %}
+        {% for book in items %}
+            {% include 'include/book.html' %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

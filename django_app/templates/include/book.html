@@ -1,0 +1,60 @@
+{% load book_extras %}
+{% load humanize %}
+
+
+<div class="media">
+    <hr>
+    <div class="media-left media-middle">
+        <a href="{{ book.link }}">
+            <img class="media-object" src="{{ book.image }}" alt="{{ book.title }}">
+        </a>
+        <a href="{{ book.link }}" class="btn btn-default btn-xs"> 도서 상세 정보 </a>
+    </div>
+    <div class="media-body">
+{#        {% if type == 'register' %}#}
+{#            <form action="{% url 'books:register_save' %}" method="post">#}
+{#            #}
+{#                {% csrf_token %}#}
+{#                <input type="hidden" name="isbn" value="{{ book.isbn }}">#}
+{#                <input type="submit" class="btn btn-sm btn-warning pull-right" value="도서등록">#}
+{#            </form>#}
+{#        {% elif type == 'wish' %}#}
+{#            <form action="{% url 'books:wish_save' %}" method="post">#}
+{#                {% csrf_token %}#}
+{#                <input type="hidden" name="isbn" value="{{ book.isbn }}">#}
+{#                <input type="submit" class="btn btn-sm btn-primary pull-right" value="구매신청">#}
+{#            </form>#}
+{#        {% elif type == 'wish_save' %}#}
+{#            {% if book.wish_user == user %}#}
+{#                <a href="{% url 'books:wish_cancel' book.id %}"><button class="btn btn-sm btn-default pull-right"> 구매 신청 취소  <br> 구매 신청일 : {{ book.created_at|date }}</button></a>#}
+{#            {% else %}#}
+{#                <button class="btn btn-sm btn-default pull-right disabled"> 구매 신청자 : {{ book.wish_user.nickname }} 님 <br> 구매 신청일 : {{ book.created_at|date }}</button>#}
+{#            {% endif %}#}
+{#        {% if type == 'list' %}#}
+{#            {% if not book.rent_info %}#}
+{#                <form action="{% url 'books:rent' book.id %}" method="post">#}
+{#                    {% csrf_token %}#}
+{#                    <input type="submit" class="btn btn-sm btn-success pull-right" value="대여신청">#}
+{#                </form>#}
+{#            {% else %}#}
+{#                <button type="button" class="btn btn-sm btn-default pull-right disabled">{{ book.rent_info.user.nickname }}님 대출중 <br> 반납예정일 : {{ book.rent_info.rent_end}}</button>#}
+{#            {% endif %}#}
+{#        {% elif type == 'mybook' %}#}
+{#            <form action="{% url 'books:return_book' book.id %}" method="post">#}
+{#                {% csrf_token %}#}
+{#                {% if book.check_overdue %}#}
+{#                <button type="submit" class="btn btn-sm btn-warning pull-right">반납예정일 : {{ book.rent_info.rent_end }}<br>연체도서 반납하기</button>#}
+{#                {% else %}#}
+{#                <button type="submit" class="btn btn-sm btn-default pull-right">반납예정일 : {{ book.rent_info.rent_end }}<br>반납하기</button>#}
+{#                {% endif %}#}
+{#            </form>#}
+{#        {% endif %}#}
+        <h4 class="media-heading">{{ book.title|book_title|safe }}</h4>
+        <p class="book-info">{{ book.writer|safe }} | {{ book.publisher|safe }} | {{ book.publication_date }} |
+            <span class="text-primary">{{ book.price |intcomma }}원</span><br>
+            <small>{{ book.intro|safe }}</small>
+        </p>
+    </div>
+
+</div>
+

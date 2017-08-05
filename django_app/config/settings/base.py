@@ -55,6 +55,10 @@ api_secret_keys = json.loads(open(API_SECRET_KEYS).read())
 
 FACEBOOK_SECRET_CODE = api_secret_keys['facebook']['secret_key']
 
+CLIENT_ID = api_secret_keys['CLIENT_ID']
+CLIENT_SECRET = api_secret_keys['CLIENT_SECRET']
+
+
 
 # kakako
 KAKAO_APP_ID = '0b73c9dfce9946e2d524afac12ac7193'
@@ -69,6 +73,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     'django.contrib.sites',
 

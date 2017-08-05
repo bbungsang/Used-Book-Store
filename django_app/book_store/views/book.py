@@ -8,6 +8,8 @@ from ..models import Book
 from ..models import BookBuyBucket
 from ..forms import SearchForm
 
+from ..api import get_book_info
+
 User = get_user_model()
 
 
@@ -146,4 +148,8 @@ def book_bucket_list(request):
 
 def book_sell_register(request):
 
-    return render(request, 'books/book_sell_register.html')
+    keyword = request.GET.get('keyword')
+    items = None
+    if keyword:
+        items = get_book_info(keyword)
+    return render(request, 'books/book_sell_register.html', {'items': items})
