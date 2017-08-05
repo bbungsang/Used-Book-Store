@@ -53,6 +53,8 @@ class User(AbstractUser):
 
     # profile_img = models.ImageField(blank=True)
     email = models.EmailField(null=True, blank=True)
+    nickname = models.CharField(max_length=30)
+
     # 자주 검색하는 테이블일 경우 인덱스를 거는 것이 좋다
 
     # 유저타입. 기본은 Django, 페이스북 로그인 시 USER_TYPE_FACEBOOK 값을 갖음
