@@ -3,6 +3,7 @@ from django.conf import settings
 import json
 import re
 import urllib.request
+import ssl
 
 from .models import Book
 
@@ -15,7 +16,8 @@ def get_book_info(title, display='3', sort='count'):
     search_request = urllib.request.Request(url)
     search_request.add_header("X-Naver-Client-Id", client_id)
     search_request.add_header("X-Naver-Client-Secret", client_secret)
-    response = urllib.request.urlopen(search_request)
+    context = ssl._create_unverified_context()
+    response = urllib.request.urlopen(search_request, context=context)
     rescode = response.getcode()
     if rescode==200:
         response_body = response.read()
