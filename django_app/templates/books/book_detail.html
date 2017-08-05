@@ -1,0 +1,23 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+
+<section>
+<img src="{{ book.image_url }}" alt="표지 이미지">
+<div>제목</div>
+<div>{{ book.title }}</div>
+<div>소개</div>
+<div>{{ book.intro }}</div>
+<div>저자</div>
+<div>{{ book.writer }}</div>
+<div>정가</div>
+<div>{{ book.price }}</div>
+<div>출판사</div>
+<div>{{ book.publisher }}</div>
+<div>출판일</div>
+<div>{{ book.publication_date }}</div>
+<div>isbn</div>
+<div>{{ book.isbn }}</div>
+
+</section>
+{% endblock %}
