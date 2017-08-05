@@ -142,3 +142,8 @@ def book_bucket_list(request):
         'transaction', 'transaction__book'
     )
     return render(request, 'books/book_bucket.html', {'items': items})
+
+
+def book_sell_register(request):
+
+    return render(request, 'books/book_sell_register.html')

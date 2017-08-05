@@ -6,6 +6,7 @@ app_name = 'books'
 urlpatterns = [
     url(r'^$', views.main, name='main'),
     url(r'^book/sell/list$', views.book_sell_list, name='book_sell_list'),
+    url(r'^book/sell/register$', views.book_sell_register, name='book_sell_register'),
     url(r'^book/bucket/(?P<transaction_pk>\d+)/save$', views.book_bucket_save, name='book_bucket_save'),
     url(r'^book/bucket/list$', views.book_bucket_list, name='book_bucket_list'),
     url(r'^book/buy/list$', views.book_buy_list, name='book_buy_list'),
