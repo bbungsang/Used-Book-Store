@@ -185,7 +185,7 @@ ENV/
 
 # End of https://www.gitignore.io/api/linux,django,python,pycharm
 
-.idea/
+.idea/*
 
 # secret files
 .config_secret/

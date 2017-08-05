@@ -76,8 +76,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+
     'book_store',
     'member.apps.MemberConfig',
+    'django_messages',
 ]
 
 REST_FRAMEWORK = {
@@ -120,6 +122,7 @@ TEMPLATES = [
                 # Custom context processors
                 'member.utils.context_processors.socials.facebook_info',
                 'member.utils.context_processors.socials.kakao_info',
+                'django_messages.context_processors.inbox',
             ],
         },
     },

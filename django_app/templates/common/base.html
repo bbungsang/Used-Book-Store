@@ -37,6 +37,14 @@
                             {{ user.nickname }}
                         </a>
                     </li>
+                     <li>
+                        <a href="{% url 'messages_inbox'%}">
+                            쪽지함
+                            {% if messages_inbox_count %}
+                            new!
+                            {% endif %}
+                        </a>
+                    </li>
                     <li>
                         <a href="#">
                             장바구니
@@ -118,6 +126,8 @@
                 <img src="{% static 'images/logo.jpg' %}">
             </div>
         </div>
+        {% block sidebar %}
+        {% endblock %}
         {% block content %}
         {% endblock %}
     </div>
