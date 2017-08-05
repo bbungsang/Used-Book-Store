@@ -1,81 +1,61 @@
 from django.conf import settings
 from django.db import models
+from django_extensions.db.models import TimeStampedModel
 
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters.html import HtmlFormatter
 from pygments import highlight
 
 
-class BookInfo(models.Model):
-    objects = None
-    image = models.ImageField()
-    title = models.CharField(max_length=48)
-    intro = models.TextField(blank=True)
-    writer = models.CharField(max_length=36)
-    publisher = models.CharField(max_length=36)
-    publication = models.CharField(max_length=12)
+class Book(TimeStampedModel):
+    """책 정보"""
+    image_url = models.URLField("이미지url")
+    title = models.CharField("제목", max_length=48)
+    intro = models.TextField("소개", blank=True)
+    writer = models.CharField("저자", max_length=36)
+    price = models.IntegerField("정가")
+    isbn = models.CharField("isbn", max_length=100, unique=True)
+    publisher = models.CharField("출판사", max_length=40)
+    publication_date = models.DateField("출판일")
 
-    original_price = models.CharField(max_length=12)
-    used_price = models.CharField(max_length=12, blank=True)
-    sell_price1 = models.CharField(max_length=12, blank=True)
-    sell_price2 = models.CharField(max_length=12, blank=True)
-    sell_price3 = models.CharField(max_length=12, blank=True)
-
-    book_bucket = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        through='BookBucket',
-        related_name='book_bucket'
-    )
-
-    book_like = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        through='BookLike',
-        related_name='like_books',
-    )
-
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='book_info')
-    highlighted = models.TextField()
-
-    def save(self, *args, **kwargs):
-        """
-        `pygments` 라이브러리를 사용하여 하이라이트된 코드 생성
-        """
-        lexer = get_lexer_by_name(self.language)
-        linenos = self.linenos and 'table' or False
-        options = self.title and {'title': self.title} or {}
-        formatter = HtmlFormatter(style=self.style, linenos=linenos,
-                                  full=True, **options)
-        self.highlighted = highlight(self.code, lexer, formatter)
-        super(BookInfo, self).save(*args, **kwargs)
+    def __str__(self):
+        return "{} {}".format(self.title, self.writer)
 
 
-class BookLike(models.Model):
+class Transaction(TimeStampedModel):
+    """거래기록"""
+    book = models.ForeignKey(Book)
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="seller_set", verbose_name="판매자", null=True, default=None, blank=True)
+    buyer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="buyer_set", verbose_name="구매자", null=True, default=None, blank=True)
+    is_successed = models.BooleanField("거래성사", default=False)
+    sell_price = models.IntegerField("판매가")
+
+
+class BookLike(TimeStampedModel):
+    """책에 대한 좋아요"""
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    book_info = models.ForeignKey(BookInfo, )
-    created_at = models.DateTimeField(auto_now_add=True)
+    book_info = models.ForeignKey(Book)
 
 
-class SellBook(models.Model):
-    book_info = models.ForeignKey(BookInfo, )
+class Comment(TimeStampedModel):
+    book_info = models.ForeignKey(Book)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    sell_price = models.CharField(max_length=12)
-    book_status = models.CharField(max_length=2)
-
-
-class Comment(models.Model):
-    book_info = models.ForeignKey(BookInfo, )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    created_at = models.DateTimeField(auto_now_add=True)
-    modify_at = models.DateTimeField(auto_now=True)
 
 
 class Category(models.Model):
     pass
 
 
-class BookBucket(models.Model):
+class BookBuyBucket(TimeStampedModel):
+    """장바구니"""
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     book = models.ForeignKey(
-        BookInfo,
+        Book,
     )
-    create_at = models.DateTimeField(auto_now=True)
+
+class BookSellBucket(TimeStampedModel):
+    """판매자 판매 목록"""
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    book = models.ForeignKey(
+        Book,
+    )
