@@ -44,7 +44,7 @@ def signup(request):
     if request.method == "POST":
         form = SignupForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            user = form.create_user()
+            user = form.save()
             django_login(request, user)
             return redirect('member:my_profile')
         else:
