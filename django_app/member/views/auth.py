@@ -46,7 +46,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             django_login(request, user)
-            return redirect('member:my_profile')
+            return redirect('member:profile')
         else:
             context = {
                 'form': form,
