@@ -13,5 +13,5 @@ class BookComment(TimeStampedModel):
 
 class TransactionComment(TimeStampedModel):
     post = models.ForeignKey(Transaction)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    content = models.TextField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='댓글 작성자')
+    content = models.TextField('댓글 내용')
