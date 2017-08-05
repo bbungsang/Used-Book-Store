@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
@@ -15,10 +16,12 @@ class ComposeForm(forms.Form):
     """
     A simple default form for private messages.
     """
-    recipient = CommaSeparatedUserField(label=_(u"Recipient"))
-    subject = forms.CharField(label=_(u"Subject"), max_length=140)
-    body = forms.CharField(label=_(u"Body"),
-        widget=forms.Textarea(attrs={'rows': '12', 'cols':'55'}))
+    User = get_user_model()
+
+    recipient = forms.ModelChoiceField(label='받는사람', queryset=User.objects.all())
+    subject = forms.CharField(label='제목', max_length=140)
+    body = forms.CharField(label='내용',
+                           widget=forms.Textarea(attrs={'rows': '12', 'cols':'55'}))
 
 
     def __init__(self, *args, **kwargs):
@@ -27,30 +30,28 @@ class ComposeForm(forms.Form):
         if recipient_filter is not None:
             self.fields['recipient']._recipient_filter = recipient_filter
 
-
     def save(self, sender, parent_msg=None):
         recipients = self.cleaned_data['recipient']
         subject = self.cleaned_data['subject']
         body = self.cleaned_data['body']
         message_list = []
-        for r in recipients:
-            msg = Message(
-                sender = sender,
-                recipient = r,
-                subject = subject,
-                body = body,
-            )
+        msg = Message(
+            sender=sender,
+            recipient=recipients,
+            subject=subject,
+            body=body,
+        )
+        if parent_msg is not None:
+            msg.parent_msg = parent_msg
+            parent_msg.replied_at = timezone.now()
+            parent_msg.save()
+        msg.save()
+        message_list.append(msg)
+        if notification:
             if parent_msg is not None:
-                msg.parent_msg = parent_msg
-                parent_msg.replied_at = timezone.now()
-                parent_msg.save()
-            msg.save()
-            message_list.append(msg)
-            if notification:
-                if parent_msg is not None:
-                    notification.send([sender], "messages_replied", {'message': msg,})
-                    notification.send([r], "messages_reply_received", {'message': msg,})
-                else:
-                    notification.send([sender], "messages_sent", {'message': msg,})
-                    notification.send([r], "messages_received", {'message': msg,})
+                notification.send([sender], "messages_replied", {'message': msg,})
+                notification.send([r], "messages_reply_received", {'message': msg,})
+            else:
+                notification.send([sender], "messages_sent", {'message': msg,})
+                notification.send([r], "messages_received", {'message': msg,})
         return message_list
