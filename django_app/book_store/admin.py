@@ -34,7 +34,7 @@ class BookSellBucketAdmin(ForeignKeyAutocompleteAdmin):
 class TransactionCommentCreateAdmin(ForeignKeyAutocompleteAdmin):
     list_display = ['id', 'post', 'author', 'content']
     raw_id_fields = ['post', 'author']
-    # search_fields = ['']
+    search_fields = ['author__name']
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Transaction, TransactionAdmin)

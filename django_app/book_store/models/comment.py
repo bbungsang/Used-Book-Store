@@ -6,12 +6,14 @@ from book_store.models.book import Book, Transaction
 
 
 class BookComment(TimeStampedModel):
-    book_info = models.ForeignKey(Book, verbose_name='책 정보')
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    content = models.TextField()
+    """책 디테일 페이지 댓글"""
+    book_info = models.ForeignKey(Book)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='댓글 작성자')
+    content = models.TextField('댓글 내용')
 
 
 class TransactionComment(TimeStampedModel):
-    post = models.ForeignKey(Transaction, verbose_name='거래 정보')
+    """거래 포스트 댓글"""
+    post = models.ForeignKey(Transaction)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='댓글 작성자')
     content = models.TextField('댓글 내용')
