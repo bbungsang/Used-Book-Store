@@ -1,15 +1,15 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 from .forms import SearchForm
-from .models import BookInfo, BookBucket
+from .models import Book, BookBuyBucket
 
 User = get_user_model()
 
 
 def main(request):
-    books = BookInfo.objects.all()
+    books = Book.objects.all()
     context = {
         'books': books,
         'search': SearchForm(),
@@ -18,7 +18,7 @@ def main(request):
 
 
 def book_detail(request, book_pk):
-    book = BookInfo.objects.get(pk=book_pk)
+    book = Book.objects.get(pk=book_pk)
     context = {
         'book': book,
     }
@@ -37,7 +37,7 @@ def book_search(request):
         q = form.cleaned_data['q_search']
 
         # BookInfo 테이블의 title, writer, publisher 필드에 q 가 속한 레코드를 book_lists 에 할당
-        book_lists = BookInfo.objects.filter(
+        book_lists = Book.objects.filter(
             Q(Q(title__contains=q) | Q(writer__contains=q)) | Q(publisher__contains=q),
         )
 
@@ -59,20 +59,20 @@ def book_bucket(request):
         book_id = request.POST['book_id']
 
         # book_id 에 해당하는 BookInfo 테이블의 레코드를 book_info 에 할당
-        book_info = get_object_or_404(BookInfo, pk=book_id)
+        book_info = get_object_or_404(Book, pk=book_id)
 
-        # BookBucket 을 역참조하여 로그인 한 유저가 선택한 책 정보가 담긴 레코드 생성
+        # BookBuyBucket 을 역참조하여 로그인 한 유저가 선택한 책 정보가 담긴 레코드 생성
         # 장바구니는 책을 중복할 수 있으므로 get_or_create 가 아닌 create 활용
-        book_info.bookbucket_set.create(
+        book_info.bookbuybucket_set.create(
             user=request.user,
             book=book_info,
         )
 
-        # book_lists = book_info.bookbucket_set.filter(user_id=request.user.id)
+        # book_lists = book_info.BookBuyBucket_set.filter(user_id=request.user.id)
         # 질문) 아래 코드와 뭐가 다른건지 모르겠다.
 
-        # BookBucket 테이블에서 user id 에 해당하는 레코드를 전부 book_lists 에 할당(객체의 iterable 형태)
-        book_lists = BookBucket.objects.filter(user_id=request.user.id)
+        # BookBuyBucket 테이블에서 user id 에 해당하는 레코드를 전부 book_lists 에 할당(객체의 iterable 형태)
+        book_lists = BookBuyBucket.objects.filter(user_id=request.user.id)
 
         # 템플릿에 전달할 인자인 books 선언
         books = []
@@ -80,20 +80,20 @@ def book_bucket(request):
         # iterable 형태인 book_lists 를 for 문으로 분리시키고,
         for book_list in book_lists:
 
-            # 분리된 BookBucket 레코드의 book_id 에 해당하는 BookInfo 의 정보를 순차적으로 books 에 append
-            books.append(BookInfo.objects.get(pk=book_list.book_id))
+            # 분리된 BookBuyBucket 레코드의 book_id 에 해당하는 BookInfo 의 정보를 순차적으로 books 에 append
+            books.append(Book.objects.get(pk=book_list.book_id))
 
         context = {
             'books': books,
         }
         return render(request, 'books/book_bucket.html', context)
     else:
-        book_lists = BookBucket.objects.filter(user_id=request.user.id)
+        book_lists = BookBuyBucket.objects.filter(user_id=request.user.id)
 
         books = []
 
         for book_list in book_lists:
-            books.append(BookInfo.objects.get(pk=book_list.book_id))
+            books.append(Book.objects.get(pk=book_list.book_id))
 
         context = {
             'books': books,
