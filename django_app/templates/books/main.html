@@ -11,7 +11,7 @@
             <li>
                 <div class="book-info">
                     <div class="book-img">
-                        <a href="{% url "book_store:"%}"><img src="{{ book.image_url }}">
+                        <a href="{% url "book_store:book_detail" book.id %}"><img src="{{ book.image_url }}">
                         </a>
                     </div>
                     <div class="book_description">
