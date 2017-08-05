@@ -8,18 +8,23 @@ import ssl
 from .models import Book
 
 
-def get_book_info(title, display='3', sort='count'):
+def get_book_info(title=None, isbn=None, display='3', sort='count'):
     client_id = settings.CLIENT_ID
     client_secret = settings.CLIENT_SECRET
-    enc_text = urllib.parse.quote(title)
-    url = "https://openapi.naver.com/v1/search/book_adv?d_titl=" + enc_text +"&display="+ display + "&sort=" + sort
+
+    if title:
+        enc_text = urllib.parse.quote(title)
+        url = "https://openapi.naver.com/v1/search/book_adv?d_titl=" + enc_text +"&display="+ display + "&sort=" + sort
+    if isbn:
+        enc_text = urllib.parse.quote(isbn)
+        url = "https://openapi.naver.com/v1/search/book_adv?d_isbn=" + enc_text
     search_request = urllib.request.Request(url)
     search_request.add_header("X-Naver-Client-Id", client_id)
     search_request.add_header("X-Naver-Client-Secret", client_secret)
     context = ssl._create_unverified_context()
     response = urllib.request.urlopen(search_request, context=context)
     rescode = response.getcode()
-    if rescode==200:
+    if rescode == 200:
         response_body = response.read()
         json_rt = response_body.decode('utf-8')
         py_rt = json.loads(json_rt)
@@ -47,7 +52,8 @@ def register_book(isbn, model=Book):
     search_request = urllib.request.Request(url)
     search_request.add_header("X-Naver-Client-Id", client_id)
     search_request.add_header("X-Naver-Client-Secret", client_secret)
-    response = urllib.request.urlopen(search_request)
+    context = ssl._create_unverified_context()
+    response = urllib.request.urlopen(search_request, context=context)
     rescode = response.getcode()
     if rescode==200:
         response_body = response.read()
@@ -65,7 +71,7 @@ def register_book(isbn, model=Book):
             image_url=item['image'],
             isbn=item['isbn'],
             price=int(item['price']),
-            publication_date=datetime.strptime(item['pubdate'], "%Y-%m-%d").date(),
+            publication_date=datetime.strptime(item['pubdate'], "%Y%m%d").date(),
         )
         message, book = '등록완료!', book
         return message, book

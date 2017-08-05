@@ -6,10 +6,5 @@
         <input type="submit">
     </form>
 
-    {% if items %}
-        {% for book in items %}
-            {% include 'include/book.html' %}
-            {{ form.as_p }}
-        {% endfor %}
-    {% endif %}
+        {% include 'include/book.html' %}
 {% endblock %}
