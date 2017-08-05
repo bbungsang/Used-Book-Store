@@ -40,9 +40,13 @@ class Category(models.Model):
 class BookBuyBucket(TimeStampedModel):
     """장바구니"""
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    book = models.ForeignKey(
-        Book,
+    transaction = models.ForeignKey(
+        Transaction,
     )
+
+    class Meta:
+        unique_together = (("user", "transaction"),)
+
 
 class BookSellBucket(TimeStampedModel):
     """판매자 판매 목록"""

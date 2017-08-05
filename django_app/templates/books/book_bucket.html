@@ -1,8 +1,9 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    {% for book in books %}
-    <img src="{{ book.image.url }}">
-    {{ book.title }} | {{ book.writer }} | {{ book.publisher }}
-    {% endfor %}
+    {{ items }}
+{#    {% for item in items %}#}
+{#    <img src="{{ item.transaction.book.image.url }}">#}
+{#    {{ item.transaction.book.title }} | {{ item.transaction.book.writer }} | {{ item.transaction.book.publisher }}#}
+{#    {% endfor %}#}
 {% endblock %}

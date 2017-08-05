@@ -20,8 +20,8 @@ class TransactionAdmin(ForeignKeyAutocompleteAdmin):
 
 
 class BookBuyBucketAdmin(ForeignKeyAutocompleteAdmin):
-    list_display = ['id', 'user', 'book']
-    raw_id_fields = ['user', 'book']
+    list_display = ['id', 'user', 'transaction']
+    raw_id_fields = ['user', 'transaction']
     search_fields = ['id', 'user__username', 'user__email']
 
 
