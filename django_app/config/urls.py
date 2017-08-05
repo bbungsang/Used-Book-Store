@@ -23,10 +23,9 @@ from member import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^book/', include('book_store.urls')),
-    url(r'^member/', include('member.urls')),
-    url(r'^/', views.login),
-
+    url(r'^book/', include('book_store.urls', namespace="book_store")),
+    url(r'^member/', include('member.urls', namespace="member")),
+    url(r'^$', views.login),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_DIR)
 urlpatterns += static('/static/', document_root='project/.static_root')
