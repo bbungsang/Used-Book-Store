@@ -26,7 +26,7 @@ from rest_framework.authtoken import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^book/', include('book_store.urls', namespace="book_store")),
-    url(r'^member/', include('member.urls', namespace="book_store")),
+    url(r'^member/', include('member.urls', namespace="member")),
     # url(r'^$', views.login),
 
     url(r'^api-token-auth/', views.obtain_auth_token),
