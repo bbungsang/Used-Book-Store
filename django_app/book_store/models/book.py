@@ -33,11 +33,6 @@ class BookLike(TimeStampedModel):
     book_info = models.ForeignKey(Book)
 
 
-class Comment(TimeStampedModel):
-    book_info = models.ForeignKey(Book)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-
-
 class Category(models.Model):
     pass
 
