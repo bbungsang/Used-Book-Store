@@ -1,0 +1,12 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<section>
+    <img src="{{ book.image_url }}">
+    <div>{{ book.title }} | {{ book.writer }} | {{ book.publisher }}</div>
+    <div>판매희망 가격 : </div>
+    {{ price }}
+{#    판매자정보로 보내기#}
+    <button type="submit">판매 등록하기</button>
+</section>
+{% endblock %}

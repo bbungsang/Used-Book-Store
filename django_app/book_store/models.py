@@ -17,6 +17,12 @@ class Book(TimeStampedModel):
     def __str__(self):
         return "{} {}".format(self.title, self.writer)
 
+    @property
+    def left_over(self):
+        """재고정보"""
+        return Transaction.objects.filter(
+            book=self, is_successed=False, seller__isnull=False).count()
+
 
 class Transaction(TimeStampedModel):
     """거래기록"""
@@ -24,7 +30,7 @@ class Transaction(TimeStampedModel):
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="seller_set", verbose_name="판매자", null=True, default=None, blank=True)
     buyer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="buyer_set", verbose_name="구매자", null=True, default=None, blank=True)
     is_successed = models.BooleanField("거래성사", default=False)
-    sell_price = models.IntegerField("판매가")
+    sell_price = models.IntegerField("판매가", null=True, default=None, blank=True)
 
 
 class BookLike(TimeStampedModel):

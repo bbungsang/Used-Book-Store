@@ -2,7 +2,7 @@
 
 {% block content %}
     {% for book in books %}
-    <img src="{{ book.image.url }}">
+    <img src="{{ book.image_url }}">
     {{ book.title }} | {{ book.writer }} | {{ book.publisher }}
     {% endfor %}
 {% endblock %}

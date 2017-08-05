@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 
-from ..forms import SearchForm
-from ..models import Book, BookBuyBucket
+from ..forms import SearchForm, PriceForm
+from ..models import Book, BookBuyBucket, Transaction
 
 User = get_user_model()
 
@@ -17,8 +17,8 @@ def main(request):
     return render(request, 'books/main.html', context)
 
 
-def book_detail(request, book_pk):
-    book = Book.objects.get(pk=book_pk)
+def book_detail(request, book_id):
+    book = Book.objects.get(pk=book_id)
     context = {
         'book': book,
     }
@@ -99,3 +99,27 @@ def book_bucket(request):
             'books': books,
         }
         return render(request, 'books/book_bucket.html', context)
+
+
+def book_buy(request, book_id):
+    book = Book.objects.get(id=book_id)
+    user = request.user
+    Transaction.objects.create(
+        book=book,
+        buyer=user,
+    )
+    BookBuyBucket.objects.create(
+        user=user,
+        book=book
+    )
+    book_ids = BookBuyBucket.objects.filter(user=user).values_list('book', flat=True)
+    books = Book.objects.filter(id__in=book_ids)
+    context = {'books': books}
+    return render(request, 'books/book_bucket.html', context=context)
+
+def book_sell(request, book_id):
+    book = Book.objects.get(id=book_id)
+
+    context = {'book': book, 'price': PriceForm()}
+    return render(request, 'books/book_sell.html', context=context)
+

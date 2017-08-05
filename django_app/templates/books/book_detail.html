@@ -18,6 +18,22 @@
 <div>{{ book.publication_date }}</div>
 <div>isbn</div>
 <div>{{ book.isbn }}</div>
+<div>남은수량</div>
+
+    {% if book.left_over %}
+        <div>{{ book.left_over }}</div>
+        <form action="{% url 'books:book_buy' book.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">구매하기</button>
+        </form>
+    {% else %}
+        <div>재고가 없습니다</div>
+    {% endif %}
+<form action="{% url 'books:book_sell' book.id %}" method="POST">
+    {% csrf_token %}
+
+    <button type="submit">판매하기</button>
+</form>
 
 </section>
 {% endblock %}
