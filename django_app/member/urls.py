@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^logout/$', views.logout, name='logout'),
+    url(r'^profile/$', views.profile, name='profile'),
 
     # social login
     url(r'^login/facebook/$', views.facebook_login, name='facebook_login'),

@@ -33,13 +33,18 @@
                 <ul class='member-manager'>
                     {% if request.user.is_authenticated %}
                     <li>
-                        <a href='#'>
+                        <a href="{% url 'member:profile'%}">
                             마이페이지
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             장바구니
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'member:logout' %}">
+                            로그아웃
                         </a>
                     </li>
                     {% else %}
