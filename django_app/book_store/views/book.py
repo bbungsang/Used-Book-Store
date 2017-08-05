@@ -130,6 +130,7 @@ def book_bucket_save(request, transaction_pk):
         return redirect('books:book_sell_list')
     return redirect('books:book_bucket_list')
 
+
 def book_bucket_list(request):
     '''
     찜한 책 리스트
