@@ -7,26 +7,27 @@
     </div>
     <div class="book-list">
         {% for book in books %}
-        <!--<ul>-->
-            <!--<li>-->
-                <!--<div class="book-info">-->
-                    <!--<div class="book-img">-->
-                        <!--<img src="{{ book.image.url }}">-->
-                    <!--</div>-->
-                    <!--<div class="book_description">-->
-                        <!--<p class="book-title">{{ book.title }}</p>-->
-                        <!--<span>-->
-                            <!--<a href="#">-->
-                                <!--{{ book.writer }}-->
-                            <!--</a> |-->
-                            <!--<a href="#">-->
-                                <!--{{ book.publisher }}-->
-                            <!--</a> | {{ book.publication }}-->
-                        <!--</span>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</li>-->
-        <!--</ul>-->
+        <ul>
+            <li>
+                <div class="book-info">
+                    <div class="book-img">
+                        <a href="{% url "book_store:"%}"><img src="{{ book.image_url }}">
+                        </a>
+                    </div>
+                    <div class="book_description">
+                        <p class="book-title">{{ book.title }}</p>
+                        <span>
+                            <a href="#">
+                                {{ book.writer }}
+                            </a> |
+                            <a href="#">
+                                {{ book.publisher }}
+                            </a> | {{ book.publication }}
+                        </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
         {% endfor %}
     </div>
 {% endblock %}
