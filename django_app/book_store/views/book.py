@@ -117,6 +117,7 @@ def book_buy(request, book_id):
     context = {'books': books}
     return render(request, 'books/book_bucket.html', context=context)
 
+
 def book_sell(request, book_id):
     book = Book.objects.get(id=book_id)
 

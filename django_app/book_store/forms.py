@@ -14,7 +14,7 @@ class SearchForm(forms.Form):
 
 class PriceForm(forms.Form):
     price = forms.IntegerField(
-        widget=forms.TextInput(
+        widget=forms.IntegerField(
             attrs={
                 'placeholder': '희망가격',
             }
