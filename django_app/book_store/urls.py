@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^$', views.main, name='main'),
     url(r'^book_search/$', views.book_search, name='book_search'),
     url(r'^book_bucket/$', views.book_bucket, name='book_bucket'),
+    url(r'^detail/([0-9]+)', views.book_detail, name='book_detail')
 ]
