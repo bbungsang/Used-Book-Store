@@ -10,18 +10,25 @@ from .models import BookSellBucket
 
 class BookAdmin(ForeignKeyAutocompleteAdmin):
     list_display = ['id', 'title', 'price', 'writer', 'publisher', 'publication_date', 'isbn']
+    search_fields = ['title', 'writer', 'isbn']
 
 
 class TransactionAdmin(ForeignKeyAutocompleteAdmin):
     list_display = ['id', 'book', 'seller', 'buyer', 'is_successed', 'sell_price']
+    raw_id_fields = ['book', 'seller', 'buyer']
+    search_fields = ['id', 'book__title', 'seller__username', 'buyer__username']
 
 
 class BookBuyBucketAdmin(ForeignKeyAutocompleteAdmin):
     list_display = ['id', 'user', 'book']
+    raw_id_fields = ['user', 'book']
+    search_fields = ['id', 'user__username', 'user__email']
 
 
 class BookSellBucketAdmin(ForeignKeyAutocompleteAdmin):
     list_display = ['id', 'user', 'book']
+    raw_id_fields = ['user', 'book']
+    search_fields = ['id', 'user__username', 'user__email']
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Transaction, TransactionAdmin)
