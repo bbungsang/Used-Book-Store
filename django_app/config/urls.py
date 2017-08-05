@@ -18,18 +18,14 @@ from django.contrib import admin
 
 from config import settings
 from django.conf.urls.static import static
-# from member import views
-
-from rest_framework.authtoken import views
+from member import views
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^book/', include('book_store.urls', namespace="book_store")),
     url(r'^member/', include('member.urls', namespace="member")),
-    # url(r'^$', views.login),
-
-    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^$', views.login),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_DIR)
 urlpatterns += static('/static/', document_root='project/.static_root')
