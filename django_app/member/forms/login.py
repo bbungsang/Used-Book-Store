@@ -39,6 +39,6 @@ class LoginForm(forms.Form):
             self.cleaned_data['user'] = user
         else:
             raise forms.ValidationError(
-                '로그인 정보가 부정확합니다. 다시 로그인하시거나, 회원가입해주세요.'
+                '. 다시 로그인하시거나, 회원가입해주세요.'
             )
         return self.cleaned_data

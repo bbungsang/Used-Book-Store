@@ -55,6 +55,10 @@ api_secret_keys = json.loads(open(API_SECRET_KEYS).read())
 
 FACEBOOK_SECRET_CODE = api_secret_keys['facebook']['secret_key']
 
+CLIENT_ID = api_secret_keys['CLIENT_ID']
+CLIENT_SECRET = api_secret_keys['CLIENT_SECRET']
+
+
 
 # kakako
 KAKAO_APP_ID = '0b73c9dfce9946e2d524afac12ac7193'
@@ -62,7 +66,6 @@ KAKAO_ADMIN_KEY = api_secret_keys['kakao']['admin_key']
 KAKAO_CLIENT_SECRET = api_secret_keys['kakao']['client_secret']
 
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -70,15 +73,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     'django.contrib.sites',
 
     'rest_framework',
     'rest_framework.authtoken',
 
+    'django_messages',
     'book_store',
-    'member.apps.MemberConfig',
+    'member',
 ]
+
+# Application definition
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
@@ -120,6 +127,7 @@ TEMPLATES = [
                 # Custom context processors
                 'member.utils.context_processors.socials.facebook_info',
                 'member.utils.context_processors.socials.kakao_info',
+                'django_messages.context_processors.inbox',
             ],
         },
     },

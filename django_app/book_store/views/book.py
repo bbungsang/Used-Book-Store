@@ -3,10 +3,13 @@ from django.db import IntegrityError
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
+from ..forms.transaction import SellBookForm
 from ..models import Transaction
 from ..models import Book
 from ..models import BookBuyBucket
 from ..forms import SearchForm
+
+from ..api import get_book_info, register_book
 
 User = get_user_model()
 
@@ -142,3 +145,24 @@ def book_bucket_list(request):
         'transaction', 'transaction__book'
     )
     return render(request, 'books/book_bucket.html', {'items': items})
+
+
+def book_sell_register(request):
+    keyword = request.GET.get('keyword')
+    items = None
+    if keyword:
+        items = get_book_info(keyword)
+    datas = []
+    if items:
+        for item in items:
+            book = register_book(isbn=item['isbn'])[1]
+            form = SellBookForm(initial={'book': book})
+            datas.append([item, form])
+    return render(request, 'books/book_sell_register.html', {'datas': datas})
+
+def book_sell_register_save(request):
+    if request.method == 'POST':
+        form = SellBookForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('books:book_sell_list')

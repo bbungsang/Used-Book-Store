@@ -16,15 +16,20 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from config import settings
+from django_messages.views import *
+from django_app.member.forms import NewComposeForm
+# from member.forms import NewComposeForm
 from django.conf.urls.static import static
-from member import views
-
+from django_app.member import views
+# from member import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^book/', include('book_store.urls', namespace="book_store")),
     url(r'^member/', include('member.urls', namespace="member")),
+    url(r'^messages/compose/$', compose, {'form_class': NewComposeForm,}, name='messages_compose'),
+    url(r'^messages/', include('django_messages.urls')),
+    # url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^$', views.login),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_DIR)

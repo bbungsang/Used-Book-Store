@@ -10,7 +10,9 @@ colorama==0.3.7
 decorator==4.1.1
 Django==1.11.3
 django-extensions==1.8.1
+-e git+https://github.com/arneb/django-messages.git@b6bd11a767c9a5bf31fec6e1980a28b3734ea432#egg=django_messages
 django-storages==1.6.3
+djangorestframework==3.6.3
 docker-py==1.7.2
 dockerpty==0.4.1
 docopt==0.6.2
@@ -31,7 +33,6 @@ Pygments==2.2.0
 python-dateutil==2.6.1
 pytz==2017.2
 PyYAML==3.12
-djangorestframework==3.6.3
 requests==2.9.1
 s3transfer==0.1.10
 selenium==3.4.3

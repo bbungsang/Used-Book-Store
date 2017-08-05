@@ -29,12 +29,20 @@
     <div class="container">
 
         <div class="top-bar">
-            <div class='do-it'>
+            <div class="do-it">
                 <ul class='member-manager'>
                     {% if request.user.is_authenticated %}
                     <li>
                         <a href="{% url 'member:profile'%}">
-                            마이페이지
+                            {{ user.nickname }}
+                        </a>
+                    </li>
+                     <li>
+                        <a href="{% url 'messages_inbox'%}">
+                            쪽지함
+                            {% if messages_inbox_count %}
+                            new!
+                            {% endif %}
                         </a>
                     </li>
                     <li>
@@ -49,12 +57,12 @@
                     </li>
                     {% else %}
                     <li>
-                        <a href='#'>
+                        <a href="{% url 'member:login' %}">
                             로그인
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{% url 'member:signup' %}">
                             회원가입
                         </a>
                     </li>
@@ -118,6 +126,8 @@
                 <img src="{% static 'images/logo.jpg' %}">
             </div>
         </div>
+        {% block sidebar %}
+        {% endblock %}
         {% block content %}
         {% endblock %}
     </div>
