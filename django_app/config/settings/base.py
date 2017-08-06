@@ -66,6 +66,24 @@ KAKAO_ADMIN_KEY = api_secret_keys['kakao']['admin_key']
 KAKAO_CLIENT_SECRET = api_secret_keys['kakao']['client_secret']
 
 
+# email backend
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+
+EMAIL_INFO = os.path.join(CONFIG_SECRET_DIR, 'email_info.json')
+email_info = json.loads(open(EMAIL_INFO).read())
+
+EMAIL_HOST_USER = email_info['gmail']['id']
+EMAIL_HOST_PASSWORD = email_info['gmail']['password']
+
+
+# celery
+CELERY_BROKER_URL = 'redis://localhost:6379/'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/'
+
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
