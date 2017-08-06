@@ -1,12 +1,21 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-    <p><a href="{% url 'books:book_sell_register' %}">판매 책 등록하기</a></p>
+    <h1>판매중 도서 목록</h1>
+    <h3><a href="{% url 'books:book_sell_register' %}">판매도서 등록</a></p></h3>
+    <ul>
 {% for transaction in sell_transactions %}
-    {{ transaction.book.title }}
-    {{ transaction.seller }}
-    <a href="{% url 'books:book_bucket_save' transaction.id %}">찜하기</a>
-    {{ transaction.id }}
+    <li><img src="{{ transaction.book.image_url }}" alt=""></li>
+    <li>{{ transaction.book.title }}</li>
+    <li><a href="{% url 'messages_compose_to' transaction.seller.username %}">
+            {{ transaction.seller }}
+        </a></li>
+    <li>정가 : {{ transaction.book.price }}</li>
+    <li>판매가격 : {{transaction.sell_price }}원</li>
+    <li><a href="{% url 'books:book_bucket_save' transaction.id %}">찜하기</a></li>
+    <hr>
 {% endfor %}
+
+    </ul>
 
 {% endblock %}

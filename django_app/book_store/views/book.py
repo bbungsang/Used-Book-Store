@@ -164,5 +164,7 @@ def book_sell_register_save(request):
     if request.method == 'POST':
         form = SellBookForm(request.POST)
         if form.is_valid():
-            form.save()
+            book = form.save(commit=False)
+            book.seller = request.user
+            book.save()
         return redirect('books:book_sell_list')

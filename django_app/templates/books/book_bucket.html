@@ -1,8 +1,15 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
+    <h1>찜한 책</h1>
+    <ul>
     {% for item in items %}
-    <img src="{{ item.transaction.book.image_url }}">
-    {{ item.transaction.book.title }} | {{ item.transaction.book.writer }} | {{ item.transaction.book.publisher }}
+    <li><img src="{{ item.transaction.book.image_url }}"></li>
+        <li>{{ item.transaction.book.title }}</li>
+        <li>{{ item.transaction.book.writer }}</li>
+        <li>{{ item.transaction.book.publisher }}</li>
+        <li>정가 : {{ item.transaction.book.price }}</li>
+        <li>판매가격 : {{item.transaction.sell_price }}원</li>
     {% endfor %}
+    </ul>
 {% endblock %}
