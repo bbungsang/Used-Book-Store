@@ -1,7 +1,8 @@
 # BongDal 중고 서점 프로젝트
 책을 파는 사람과 사는 사람을 매칭해주는 웹 서비스 <br />
-*해당 레포지토리는 ASK Django 해커톤 때 협업으로 활용한 것입니다.* <br />
-[개인 프로젝트 레포지토리로 이동하기](https://github.com/Monaegi/bbungsang-UsedBookStore)
+
+*해당 레포지토리는 ASK Django 해커톤 때 협업 연습용으로 활용한 것입니다.* <br />
+[개인 프로젝트로 진행한 레포지토리 이동하기](https://github.com/Monaegi/bbungsang-UsedBookStore)
 
 ## 핵심기능
 - Naver Book API 연동하여 책 검색 및 정보 기입
